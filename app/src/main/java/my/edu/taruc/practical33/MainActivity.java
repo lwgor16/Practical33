@@ -12,6 +12,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Currency;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Spinner spinnerAge;
     private RadioGroup radioGroupGender;
@@ -131,17 +134,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         }
 
-        textViewPremium.setText("Premium price : RM" + premium);
-
-        premium = 0;
+        Currency currency = Currency.getInstance(Locale.getDefault());
+        String symbol = currency.getCurrencyCode();
+        textViewPremium.setText("Premium price : " + currency + " " + premium);
     }
 
     public void Reset(View view)
     {
-        radioButtonMale.setChecked(false);
-        radioButtonFemale.setChecked(false);
+        if(radioGroupGender.getCheckedRadioButtonId() == R.id.radioMale)
+        {
+            radioButtonMale.setChecked(false);
+        }
+        else
+        {
+            radioButtonFemale.setChecked(false);
+        }
         textViewPremium.setText("Premium");
         checkBoxSmoker.setChecked(false);
-
+        spinnerAge.setSelection(0);
     }
 }
